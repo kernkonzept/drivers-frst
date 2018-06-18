@@ -113,7 +113,7 @@ protected:
 
   int _bus_width;
   int _delay;
-  int _options;
+  int _options = 0;
 
 private:
   State _state;
