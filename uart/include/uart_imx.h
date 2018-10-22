@@ -62,6 +62,8 @@ namespace L4
   {
   public:
     Uart_imx6() : Uart_imx(Type_imx6) {}
+
+    void irq_ack();
   };
 
   class Uart_imx7 : public Uart_imx
