@@ -112,7 +112,6 @@ protected:
   u64 _sz_chip;
 
   int _bus_width;
-  int _delay;
   int _options = 0;
 
 private:
