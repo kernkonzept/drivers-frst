@@ -10,6 +10,7 @@
 
 namespace L4
 {
+
   enum
   {
     LINCR1 = 0x00,
@@ -22,45 +23,64 @@ namespace L4
 
     LINCR1_INIT = 1 << 0,
     LINCR1_MME  = 1 << 4,
+    LINCR1_BF   = 1 << 7,
 
     LINSR_LINS  = 0xf << 12,
     LINSR_LINS_INITMODE = 1 << 12,
 
     LINIER_DRIE = 1 << 2,
 
-    UARTCR_UART = 1 << 0,
-    UARTCR_WL0  = 1 << 1,
-    UARTCR_PC0  = 1 << 3,
-    UARTCR_TXEN = 1 << 4,
-    UARTCR_RXEN = 1 << 5,
-    UARTCR_PC1  = 1 << 6,
-    UARTCR_TFBM = 1 << 8,
-    UARTCR_RFBM = 1 << 9,
+    Fifo_mode = 0, // Fifo_mode == 0 -> Buffer-mode
+
+    UARTCR_UART     = 1 << 0,
+    UARTCR_WL0      = 1 << 1,
+    UARTCR_PC0      = 1 << 3,
+    UARTCR_TXEN     = 1 << 4,
+    UARTCR_RXEN     = 1 << 5,
+    UARTCR_PC1      = 1 << 6,
+    UARTCR_WL1      = 0 << 7,
+    UARTCR_TFBM     = 1 << 8,
+    UARTCR_RFBM     = 1 << 9,
+    UARTCR_RDFL_RFC_buffer = 0 << 10,
+    UARTCR_TDFL_TFC_buffer = 0 << 13,
+    UARTCR_RDFL_RFC_fifo   = 4 << 10,
+    UARTCR_TDFL_TFC_fifo   = 4 << 13,
+    UARTCR_NEF      = 0 << 20,
 
     UARTSR_DTFTFF = 1 << 1,
     UARTSR_DRFRFE = 1 << 2,
+    UARTSR_RMB    = 1 << 9,
   };
 
   bool Uart_linflex::startup(Io_register_block const *regs)
   {
     _regs = regs;
 
-    _regs->write<unsigned>(LINCR1, LINCR1_INIT | LINCR1_MME);
+    _regs->write<unsigned>(LINCR1, LINCR1_INIT | LINCR1_MME | LINCR1_BF);
     while ((_regs->read<unsigned>(LINSR) & LINSR_LINS) != LINSR_LINS_INITMODE)
       ;
 
     _regs->write<unsigned>(UARTCR, UARTCR_UART);
 
-    _regs->write<unsigned>(UARTCR,
-                           UARTCR_UART
-                           | UARTCR_WL0
-                           | UARTCR_PC0
-                           | UARTCR_TXEN
-                           | UARTCR_RXEN
-                           | UARTCR_PC1
-                           | UARTCR_TFBM
-                           | UARTCR_RFBM);
+    /* Do not use FIFO more for RX, IRQs do not work with FIFO mode
+     * (or something is wrong in the config whatsoever...) */
+    unsigned v = UARTCR_UART
+                 | UARTCR_WL0
+                 | UARTCR_PC0
+                 | UARTCR_PC1
+                 | UARTCR_TXEN
+                 | UARTCR_RXEN
+                 | UARTCR_NEF
+                 ;
 
+    if (Fifo_mode)
+      v |=   UARTCR_RDFL_RFC_fifo | UARTCR_TDFL_TFC_fifo
+           | UARTCR_TFBM | UARTCR_RFBM;
+    else
+      v |= UARTCR_RDFL_RFC_buffer | UARTCR_TDFL_TFC_buffer;
+
+    _regs->write<unsigned>(UARTCR, v);
+    _regs->write<unsigned int>(UARTSR, UARTSR_DRFRFE | UARTSR_RMB);
     _regs->clear<unsigned>(LINCR1, LINCR1_INIT);
 
     return true;
@@ -76,6 +96,7 @@ namespace L4
     else
       _regs->clear<unsigned>(LINIER, LINIER_DRIE);
     _regs->clear<unsigned>(LINCR1, LINCR1_INIT);
+
     return true;
   }
 
@@ -95,23 +116,45 @@ namespace L4
       if (!blocking)
         return -1;
 
-    _regs->write<unsigned int>(UARTSR, UARTSR_DRFRFE);
-    return _regs->read<unsigned char>(BDRM);
+    unsigned c;
+    if (Fifo_mode)
+      {
+        unsigned sr = _regs->read<unsigned>(UARTSR);
+        _regs->write<unsigned int>(UARTSR, sr);
+        c = _regs->read<unsigned char>(BDRM);
+      }
+    else
+      {
+        unsigned sr = _regs->read<unsigned>(UARTSR);
+        c = _regs->read<unsigned char>(BDRM);
+        _regs->write<unsigned int>(UARTSR, sr | UARTSR_DRFRFE | UARTSR_RMB);
+      }
+    return c;
   }
 
   int Uart_linflex::char_avail() const
   {
-    return !(_regs->read<unsigned char>(UARTSR) & UARTSR_DRFRFE);
+    if (Fifo_mode)
+      return !(_regs->read<unsigned>(UARTSR) & UARTSR_DRFRFE);
+    return _regs->read<unsigned>(UARTSR) & UARTSR_RMB;
   }
 
   void Uart_linflex::out_char(char c) const
   {
     Poll_timeout_counter i(3000000);
 
+    if (Fifo_mode)
+      while (i.test(_regs->read<unsigned>(UARTSR) & UARTSR_DTFTFF))
+        ;
+
     _regs->write<unsigned char>(BDRL, c);
 
-    while (i.test(_regs->read<unsigned>(UARTSR) & UARTSR_DTFTFF))
-      ;
+    if (!Fifo_mode)
+      {
+        while (!i.test(_regs->read<unsigned>(UARTSR) & UARTSR_DTFTFF))
+          ;
+        _regs->write<unsigned>(UARTSR, UARTSR_DTFTFF);
+      }
   }
 
   int Uart_linflex::write(char const *s, unsigned long count) const
