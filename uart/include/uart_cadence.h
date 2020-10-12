@@ -25,6 +25,7 @@ namespace L4
     bool enable_rx_irq(bool) override;
     int get_char(bool blocking = true) const override;
     int char_avail() const override;
+    void wait_tx_done() const {}
     inline void out_char(char c) const;
     int write(char const *s, unsigned long count) const override;
     void irq_ack() override;

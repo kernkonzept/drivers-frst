@@ -159,6 +159,11 @@ namespace L4
     return is_rx_fifo_non_empty();
   }
 
+  void Uart_s3c::wait_tx_done() const
+  {
+    wait_for_empty_tx_fifo();
+  }
+
   void Uart_s3c::out_char(char c) const
   {
     wait_for_non_full_tx_fifo();
@@ -167,12 +172,7 @@ namespace L4
 
   int Uart_s3c::write(char const *s, unsigned long count) const
   {
-    unsigned long c = count;
-    while (c--)
-      out_char(*s++);
-    wait_for_empty_tx_fifo();
-
-    return count;
+    return generic_write<Uart_s3c>(s, count);
   }
 
   // -----------------------

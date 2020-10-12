@@ -159,6 +159,13 @@ namespace L4
     return !!(_regs->read<unsigned int>(UTSR1) & UTSR1_RNE);
   }
 
+  void Uart_sa1000::wait_tx_done() const
+  {
+    Poll_timeout_counter cnt(3000000);
+    while (cnt.test(_regs->read<unsigned int>(UTSR1) & UTSR1_TBY))
+      ;
+  }
+
   void Uart_sa1000::out_char(char c) const
   {
     // do UTCR3 thing here as well?
@@ -170,22 +177,12 @@ namespace L4
 
   int Uart_sa1000::write(char const *s, unsigned long count) const
   {
-    unsigned old_utcr3;
-    unsigned i;
+    unsigned old_utcr3 = _regs->read<unsigned>(UTCR3);
+    _regs->write<unsigned>(UTCR3, (old_utcr3 & ~(UTCR3_RIE | UTCR3_TIE)) | UTCR3_TXE );
 
-    old_utcr3 = _regs->read<unsigned int>(UTCR3);
-    _regs->write<unsigned int>(UTCR3, (old_utcr3 & ~(UTCR3_RIE | UTCR3_TIE)) | UTCR3_TXE );
+    int c = generic_write<Uart_sa1000>(s, count);
 
-    /* transmission */
-    for (i = 0; i < count; i++)
-      out_char(s[i]);
-
-    /* wait till everything is transmitted */
-    Poll_timeout_counter cnt(3000000);
-    while (cnt.test(_regs->read<unsigned int>(UTSR1) & UTSR1_TBY))
-      ;
-
-    _regs->write<unsigned int>(UTCR3, old_utcr3);
-    return count;
+    _regs->write<unsigned>(UTCR3, old_utcr3);
+    return c;
   }
 };

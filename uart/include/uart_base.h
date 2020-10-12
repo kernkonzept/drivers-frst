@@ -51,8 +51,12 @@ namespace L4
     template <typename Uart_driver>
     int generic_write(char const *s, unsigned long count) const
     {
+      auto *self = static_cast<Uart_driver const*>(this);
+
       for (unsigned long c = count; c; --c)
-        static_cast<Uart_driver const*>(this)->out_char(*s++);
+        self->out_char(*s++);
+
+      self->wait_tx_done();
 
       return count;
     }

@@ -126,24 +126,23 @@ namespace L4
     return !(_regs->read<unsigned int>(UART01x_FR) & UART01x_FR_RXFE);
   }
 
+  void Uart_pl011::wait_tx_done() const
+  {
+    Poll_timeout_counter i(3000000);
+    while (i.test(_regs->read<unsigned int>(UART01x_FR) & UART01x_FR_BUSY))
+       ;
+  }
+
   void Uart_pl011::out_char(char c) const
   {
     Poll_timeout_counter i(3000000);
     while (i.test(_regs->read<unsigned int>(UART01x_FR) & UART01x_FR_TXFF))
       ;
-    _regs->write<unsigned int>(UART01x_DR,c);
+    _regs->write<unsigned int>(UART01x_DR, c);
   }
 
   int Uart_pl011::write(char const *s, unsigned long count) const
   {
-    unsigned long c = count;
-    while (c--)
-      out_char(*s++);
-
-    Poll_timeout_counter i(3000000);
-    while (i.test(_regs->read<unsigned int>(UART01x_FR) & UART01x_FR_BUSY))
-      ;
-
-    return count;
+    return generic_write<Uart_pl011>(s, count);
   }
 };

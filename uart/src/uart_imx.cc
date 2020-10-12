@@ -171,6 +171,13 @@ namespace L4
     return _regs->read<unsigned int>(USR2) & USR2_RDR;
   }
 
+  void Uart_imx::wait_tx_done() const
+  {
+    Poll_timeout_counter i(3000000);
+    while (i.test(!(_regs->read<unsigned int>(USR2) & USR2_TXDC)))
+      ;
+  }
+
   void Uart_imx::out_char(char c) const
   {
     Poll_timeout_counter i(3000000);
@@ -181,14 +188,6 @@ namespace L4
 
   int Uart_imx::write(char const *s, unsigned long count) const
   {
-    unsigned long c = count;
-    while (c--)
-      out_char(*s++);
-
-    Poll_timeout_counter i(3000000);
-    while (i.test(!(_regs->read<unsigned int>(USR2) & USR2_TXDC)))
-      ;
-
-    return count;
+    return generic_write<Uart_imx>(s, count);
   }
 };

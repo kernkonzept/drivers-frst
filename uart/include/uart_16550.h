@@ -31,35 +31,42 @@ namespace L4
       SPR      = 0x07, // Scratch Pad Register  (read/write)
     };
 
-    enum Register_value
+    enum Register_value_iir
     {
       IIR_BUSY = 7,
     };
 
+    enum Register_value_lsr
+    {
+      LSR_DR   = 0x01,    // Receiver data ready
+      LSR_THRE = 0x20,    // Transmit hold register empty
+      LSR_TSRE = 0x40,    // Transmitter empty
+    };
+
   public:
     enum
-      {
-        PAR_NONE = 0x00,
-        PAR_EVEN = 0x18,
-        PAR_ODD  = 0x08,
-        DAT_5    = 0x00,
-        DAT_6    = 0x01,
-        DAT_7    = 0x02,
-        DAT_8    = 0x03,
-        STOP_1   = 0x00,
-        STOP_2   = 0x04,
+    {
+      PAR_NONE = 0x00,
+      PAR_EVEN = 0x18,
+      PAR_ODD  = 0x08,
+      DAT_5    = 0x00,
+      DAT_6    = 0x01,
+      DAT_7    = 0x02,
+      DAT_8    = 0x03,
+      STOP_1   = 0x00,
+      STOP_2   = 0x04,
 
-        MODE_8N1 = PAR_NONE | DAT_8 | STOP_1,
-        MODE_7E1 = PAR_EVEN | DAT_7 | STOP_1,
+      MODE_8N1 = PAR_NONE | DAT_8 | STOP_1,
+      MODE_7E1 = PAR_EVEN | DAT_7 | STOP_1,
 
-        // these two values are to leave either mode
-        // or baud rate unchanged on a call to change_mode
-        MODE_NC  = 0x1000000,
-        BAUD_NC  = 0x1000000,
+      // these two values are to leave either mode
+      // or baud rate unchanged on a call to change_mode
+      MODE_NC  = 0x1000000,
+      BAUD_NC  = 0x1000000,
 
-        Base_rate_x86 = 115200,
-        Base_rate_pxa = 921600,
-      };
+      Base_rate_x86 = 115200,
+      Base_rate_pxa = 921600,
+    };
 
     enum Init_flags
     {
@@ -78,6 +85,7 @@ namespace L4
     bool change_mode(Transfer_mode m, Baud_rate r) override;
     int get_char(bool blocking = true) const override;
     int char_avail() const override;
+    void wait_tx_done() const;
     inline void out_char(char c) const;
     int write(char const *s, unsigned long count) const override;
     bool enable_rx_irq(bool enable = true) override;

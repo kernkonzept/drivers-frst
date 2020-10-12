@@ -110,17 +110,15 @@ namespace L4
     _regs->write32(DM_TF, c);
   }
 
-  int Uart_dm::write(char const *s, unsigned long count) const
+  void Uart_dm::wait_tx_done() const
   {
-    unsigned long c = count;
-    while (c--)
-      out_char(*s++);
-
-    // Wait until TX FIFO is empty (fully transmitted)
     Poll_timeout_counter i(3000000);
     while (i.test(!(_regs->read32(DM_SR) & DM_SR_TXEMT)))
       ;
+  }
 
-    return count;
+  int Uart_dm::write(char const *s, unsigned long count) const
+  {
+    return generic_write<Uart_dm>(s, count);
   }
 }
