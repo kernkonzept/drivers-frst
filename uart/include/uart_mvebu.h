@@ -15,14 +15,14 @@ namespace L4
   {
   public:
     explicit Uart_mvebu(unsigned baserate) : _baserate(baserate) {}
-    bool startup(Io_register_block const *);
-    void shutdown();
-    bool enable_rx_irq(bool enable = true);
-    bool change_mode(Transfer_mode m, Baud_rate r);
-    int get_char(bool blocking = true) const;
-    int char_avail() const;
-    void out_char(char c) const;
-    int write(char const *s, unsigned long count) const;
+    bool startup(Io_register_block const *) override;
+    void shutdown() override;
+    bool enable_rx_irq(bool enable = true) override;
+    bool change_mode(Transfer_mode m, Baud_rate r) override;
+    int get_char(bool blocking = true) const override;
+    int char_avail() const override;
+    inline void out_char(char c) const;
+    int write(char const *s, unsigned long count) const override;
   private:
     unsigned _baserate;
   };
