@@ -139,12 +139,17 @@ namespace L4
     return _regs->read<unsigned>(UARTSR) & UARTSR_RMB;
   }
 
+  int Uart_linflex::tx_avail() const
+  {
+    return !(_regs->read<unsigned>(UARTSR) & UARTSR_DTFTFF);
+  }
+
   void Uart_linflex::out_char(char c) const
   {
     Poll_timeout_counter i(3000000);
 
     if (Fifo_mode)
-      while (i.test(_regs->read<unsigned>(UARTSR) & UARTSR_DTFTFF))
+      while (i.test(!tx_avail()))
         ;
 
     _regs->write<unsigned char>(BDRL, c);

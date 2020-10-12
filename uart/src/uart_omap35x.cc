@@ -86,6 +86,11 @@ namespace L4
     return _regs->read<unsigned int>(LSR_REG) & LSR_REG_RX_FIFO_E_AVAIL;
   }
 
+  int Uart_omap35x::tx_avail() const
+  {
+    return true;
+  }
+
   void Uart_omap35x::out_char(char c) const
   {
     _regs->write<unsigned int>(THR_REG, c);

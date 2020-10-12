@@ -63,4 +63,5 @@ namespace L4 {
   /* UNIMPLEMENTED */
   bool Uart_of::change_mode(Transfer_mode, Baud_rate){ return true; }
   int  Uart_of::char_avail() const { return 1; }
+  int  Uart_of::tx_avail() const { return 1; }
 };

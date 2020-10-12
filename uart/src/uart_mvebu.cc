@@ -71,10 +71,15 @@ namespace L4
     return _regs->read<unsigned>(STAT) & STAT_RX_RDY;
   }
 
+  int Uart_mvebu::tx_avail() const
+  {
+    return !(_regs->read<unsigned>(STAT) & STAT_TXFIFO_FULL);
+  }
+
   void Uart_mvebu::out_char(char c) const
   {
     Poll_timeout_counter i(3000000);
-    while (i.test(_regs->read<unsigned>(STAT) & STAT_TXFIFO_FULL))
+    while (i.test(!tx_avail()))
       ;
 
     _regs->write<unsigned>(TSH, c);

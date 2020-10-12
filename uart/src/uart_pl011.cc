@@ -126,6 +126,11 @@ namespace L4
     return !(_regs->read<unsigned int>(UART01x_FR) & UART01x_FR_RXFE);
   }
 
+  int Uart_pl011::tx_avail() const
+  {
+    return !(_regs->read<unsigned int>(UART01x_FR) & UART01x_FR_TXFF);
+  }
+
   void Uart_pl011::wait_tx_done() const
   {
     Poll_timeout_counter i(3000000);
@@ -136,7 +141,7 @@ namespace L4
   void Uart_pl011::out_char(char c) const
   {
     Poll_timeout_counter i(3000000);
-    while (i.test(_regs->read<unsigned int>(UART01x_FR) & UART01x_FR_TXFF))
+    while (i.test(!tx_avail()))
       ;
     _regs->write<unsigned int>(UART01x_DR, c);
   }

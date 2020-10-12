@@ -22,6 +22,7 @@ namespace L4
     bool change_mode(Transfer_mode m, Baud_rate r) override;
     int get_char(bool blocking = true) const override;
     int char_avail() const override;
+    int tx_avail() const;
     void wait_tx_done() const {}
     bool enable_rx_irq(bool = true) override;
     inline void out_char(char c) const;

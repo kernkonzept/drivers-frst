@@ -159,6 +159,11 @@ namespace L4
     return !!(_regs->read<unsigned int>(UTSR1) & UTSR1_RNE);
   }
 
+  int Uart_sa1000::tx_avail() const
+  {
+    return _regs->read<unsigned int>(UTSR1) & UTSR1_TNF;
+  }
+
   void Uart_sa1000::wait_tx_done() const
   {
     Poll_timeout_counter cnt(3000000);
@@ -170,7 +175,7 @@ namespace L4
   {
     // do UTCR3 thing here as well?
     Poll_timeout_counter i(3000000);
-    while(i.test(!(_regs->read<unsigned int>(UTSR1) & UTSR1_TNF)))
+    while(i.test(!tx_avail()))
       ;
     _regs->write<unsigned int>(UTDR, c);
   }

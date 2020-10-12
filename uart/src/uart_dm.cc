@@ -100,11 +100,16 @@ namespace L4
     return _regs->read32(DM_SR) & DM_SR_RXRDY;
   }
 
+  int Uart_dm::tx_avail() const
+  {
+    return _regs->read32(DM_SR) & DM_SR_TXRDY;
+  }
+
   void Uart_dm::out_char(char c) const
   {
     // Wait until TX FIFO has space
     Poll_timeout_counter i(3000000);
-    while (i.test(!(_regs->read32(DM_SR) & DM_SR_TXRDY)))
+    while (i.test(!tx_avail()))
       ;
 
     _regs->write32(DM_TF, c);

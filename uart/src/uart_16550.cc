@@ -118,6 +118,11 @@ namespace L4
     return _regs->read<unsigned char>(LSR) & LSR_DR;
   }
 
+  int Uart_16550::tx_avail() const
+  {
+    return _regs->read<unsigned char>(LSR) & LSR_THRE;
+  }
+
   void Uart_16550::wait_tx_done() const
   {
     Poll_timeout_counter i(5000000);
@@ -128,7 +133,7 @@ namespace L4
   void Uart_16550::out_char(char c) const
   {
     Poll_timeout_counter i(5000000);
-    while (i.test(!(_regs->read<unsigned char>(LSR) & LSR_THRE)))
+    while (i.test(!tx_avail()))
       ;
     _regs->write<unsigned char>(TRB, c);
   }

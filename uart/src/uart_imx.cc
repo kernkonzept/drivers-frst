@@ -171,6 +171,11 @@ namespace L4
     return _regs->read<unsigned int>(USR2) & USR2_RDR;
   }
 
+  int Uart_imx::tx_avail() const
+  {
+    return _regs->read<unsigned int>(USR1) & USR1_TRDY;
+  }
+
   void Uart_imx::wait_tx_done() const
   {
     Poll_timeout_counter i(3000000);
@@ -181,8 +186,8 @@ namespace L4
   void Uart_imx::out_char(char c) const
   {
     Poll_timeout_counter i(3000000);
-    while (i.test(!(_regs->read<unsigned int>(USR1) & USR1_TRDY)))
-     ;
+    while (i.test(!tx_avail()))
+      ;
     _regs->write<unsigned int>(UTXD, c);
   }
 

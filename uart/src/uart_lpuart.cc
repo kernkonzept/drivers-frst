@@ -86,11 +86,15 @@ namespace L4
     return !(_regs->read<unsigned>(FIFO) & FIFO_RXEMPT);
   }
 
+  int Uart_lpuart::tx_avail() const
+  {
+    return _regs->read<unsigned>(FIFO) & FIFO_TXEMPT;
+  }
+
   void Uart_lpuart::out_char(char c) const
   {
     Poll_timeout_counter i(3000000);
-
-    while (i.test(!(_regs->read<unsigned>(FIFO) & FIFO_TXEMPT)))
+    while (i.test(!tx_avail()))
       ;
 
     _regs->write<unsigned char>(DATA, c);

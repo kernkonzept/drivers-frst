@@ -99,10 +99,15 @@ namespace L4
     return _regs->read<unsigned int>(STATUS_REG) & STATUS_DR;
   }
 
+  int Uart_leon3::tx_avail() const
+  {
+    return !(_regs->read<unsigned int>(STATUS_REG) & STATUS_TF);
+  }
+
   void Uart_leon3::out_char(char c) const
   {
     Poll_timeout_counter i(3000000);
-    while (i.test(_regs->read<unsigned int>(STATUS_REG) & STATUS_TF))
+    while (i.test(!tx_avail()))
       ;
     _regs->write<unsigned int>(DATA_REG, c);
   }

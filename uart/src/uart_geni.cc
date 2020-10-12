@@ -147,6 +147,11 @@ namespace L4
     return _regs->read32(RX_FIFO_STATUS) & RX_FIFO_STATUS_WC;
   }
 
+  int Uart_geni::tx_avail() const
+  {
+    return !(_regs->read32(STATUS) & STATUS_M_GENI_CMD_ACTIVE);
+  }
+
   void Uart_geni::wait_tx_done() const
   {
     Poll_timeout_counter i(3000000);
@@ -156,7 +161,9 @@ namespace L4
 
   void Uart_geni::out_char(char c) const
   {
-    wait_tx_done();
+    Poll_timeout_counter i(3000000);
+    while (i.test(!tx_avail()))
+      ;
     _regs->write32(UART_TX_TRANS_LEN, 1);
     _regs->write32(M_CMD0, M_CMD0_OP_UART_START_TX);
     _regs->write32(TX_FIFOn, c);

@@ -102,11 +102,16 @@ namespace L4
     return !(_regs->read<unsigned>(SR) & IXR_RXEMPTY);
   }
 
+  int Uart_cadence::tx_avail() const
+  {
+    return !(_regs->read<unsigned>(SR) & IXR_TXFULL);
+  }
+
   void Uart_cadence::out_char(char c) const
   {
     // check for some free fifo space
     Poll_timeout_counter i(3000000);
-    while (i.test(_regs->read<unsigned>(SR) & IXR_TXFULL))
+    while (i.test(!tx_avail()))
       ;
 
     _regs->write<unsigned>(FIFO, c);
