@@ -68,9 +68,7 @@ namespace L4
       set_rate(Default_baud);
     _regs->write<unsigned int>(UART011_LCRH, UART01x_LCRH_WLEN_8);
     _regs->write<unsigned int>(UART011_IMSC, 0);
-    Poll_timeout_counter i(3000000);
-    while (i.test() && _regs->read<unsigned int>(UART01x_FR) & UART01x_FR_BUSY)
-      ;
+    wait_tx_done();
     return true;
   }
 

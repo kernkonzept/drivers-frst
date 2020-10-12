@@ -115,9 +115,7 @@ namespace L4
     _regs->write<unsigned int>(UTCR3, (old_utcr3 & ~(UTCR3_RIE|UTCR3_TIE)));
     //proc_sti_restore(st);
 
-    Poll_timeout_counter i(3000000);
-    while (i.test(_regs->read<unsigned int>(UTSR1) & UTSR1_TBY))
-      ;
+    wait_tx_done();
 
     /* disable all */
     _regs->write<unsigned int>(UTCR3, 0);
