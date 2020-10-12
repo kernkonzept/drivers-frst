@@ -61,10 +61,20 @@ namespace L4
 
   int Uart_dcc_v6::tx_avail() const
    {
- #ifdef ARCH_arm
+#ifdef ARCH_arm
     return !(get_status() & DCC_STATUS_TX);
 #else
     return true;
+#endif
+  }
+
+  void Uart_dcc_v6::wait_tx_done() const
+  {
+#ifdef ARCH_arm
+    // The DCC interface allows only to check if the TX queue is full.
+    Poll_timeout_counter i(100000);
+    while (i.test(get_status() & DCC_STATUS_TX))
+      ;
 #endif
   }
 
