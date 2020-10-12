@@ -46,5 +46,15 @@ namespace L4
     virtual bool enable_rx_irq(bool = true) { return false; }
     Transfer_mode mode() const { return _mode; }
     Baud_rate rate() const { return _rate; }
+
+  protected:
+    template <typename Uart_driver>
+    int generic_write(char const *s, unsigned long count) const
+    {
+      for (unsigned long c = count; c; --c)
+        static_cast<Uart_driver const*>(this)->out_char(*s++);
+
+      return count;
+    }
   };
 }

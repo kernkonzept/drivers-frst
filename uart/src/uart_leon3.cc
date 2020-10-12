@@ -109,10 +109,6 @@ namespace L4
 
   int Uart_leon3::write(char const *s, unsigned long count) const
   {
-    unsigned long c = count;
-    while (c--)
-      out_char(*s++);
-
-    return count;
+    return generic_write<Uart_leon3>(s, count);
   }
 };

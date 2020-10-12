@@ -96,17 +96,7 @@ namespace L4
 
   int Uart_omap35x::write(char const *s, unsigned long count) const
   {
-    unsigned long c = count;
-    while (c--)
-      out_char(*s++);
-#if 0
-    Poll_timeout_counter i(3000000);
-    while (i.test(_regs->read<unsigned int>(UART01x_FR) & UART01x_FR_BUSY))
-     ;
-#endif
-
-    return count;
+    return generic_write<Uart_omap35x>(s, count);
   }
-
 };
 

@@ -98,10 +98,6 @@ namespace L4
 
   int Uart_lpuart::write(char const *s, unsigned long count) const
   {
-    unsigned long c = count;
-    while (c--)
-      out_char(*s++);
-
-    return count;
+    return generic_write<Uart_lpuart>(s, count);
   }
 }

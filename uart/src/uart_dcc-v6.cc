@@ -57,9 +57,13 @@ namespace L4
 
   int Uart_dcc_v6::write(char const *s, unsigned long count) const
   {
-    unsigned long c = count;
-    while (c--)
-      out_char(*s++);
+#ifdef ARCH_arm
+    return generic_write<Uart_dcc_v6>(s, count);
+#else
+    (void)s;
+    (void)count;
     return count;
+#endif
   }
+
 };
