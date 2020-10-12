@@ -6,8 +6,7 @@
  * GNU General Public License 2.
  * Please see the COPYING-GPL-2 file for details.
  */
-#ifndef L4_CXX_UART_DUMMY_H__
-#define L4_CXX_UART_DUMMY_H__
+#pragma once
 
 #include "uart_base.h"
 
@@ -16,14 +15,13 @@ namespace L4
   class Uart_dummy : public Uart
   {
   public:
-    bool startup(Io_register_block const *) override;
-    void shutdown() override;
-    bool change_mode(Transfer_mode m, Baud_rate r) override;
-    int get_char(bool blocking = true) const override;
-    int char_avail() const override;
-    inline void out_char(char c) const;
-    int write(char const *s, unsigned long count) const override;
+    bool startup(Io_register_block const *) override { return true; }
+    void shutdown() override {}
+    bool change_mode(Transfer_mode, Baud_rate) override { return true; }
+    int get_char(bool /*blocking*/ = true) const override { return 0; }
+    int char_avail() const override { return false; }
+    inline void out_char(char /*ch*/) const {}
+    int write(char const * /*str*/, unsigned long /*count*/) const override
+    { return 0; }
   };
 };
-
-#endif
