@@ -171,15 +171,12 @@ namespace L4
 
   void Uart_s3c::out_char(char c) const
   {
-    Poll_timeout_counter i(3000000);
-    while (i.test(!tx_avail()))
-      ;
     _regs->write<unsigned int>(UTXH, c);
   }
 
-  int Uart_s3c::write(char const *s, unsigned long count) const
+  int Uart_s3c::write(char const *s, unsigned long count, bool blocking) const
   {
-    return generic_write<Uart_s3c>(s, count);
+    return generic_write<Uart_s3c>(s, count, blocking);
   }
 
   // -----------------------

@@ -161,16 +161,13 @@ namespace L4
 
   void Uart_geni::out_char(char c) const
   {
-    Poll_timeout_counter i(3000000);
-    while (i.test(!tx_avail()))
-      ;
     _regs->write32(UART_TX_TRANS_LEN, 1);
     _regs->write32(M_CMD0, M_CMD0_OP_UART_START_TX);
     _regs->write32(TX_FIFOn, c);
   }
 
-  int Uart_geni::write(char const *s, unsigned long count) const
+  int Uart_geni::write(char const *s, unsigned long count, bool blocking) const
   {
-    return generic_write<Uart_geni>(s, count);
+    return generic_write<Uart_geni>(s, count, blocking);
   }
 }

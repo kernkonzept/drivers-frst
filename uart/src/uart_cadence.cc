@@ -109,17 +109,12 @@ namespace L4
 
   void Uart_cadence::out_char(char c) const
   {
-    // check for some free fifo space
-    Poll_timeout_counter i(3000000);
-    while (i.test(!tx_avail()))
-      ;
-
     _regs->write<unsigned>(FIFO, c);
   }
 
-  int Uart_cadence::write(char const *s, unsigned long count) const
+  int Uart_cadence::write(char const *s, unsigned long count, bool blocking) const
   {
-    return generic_write<Uart_cadence>(s, count);
+    return generic_write<Uart_cadence>(s, count, blocking);
   }
 
   void Uart_cadence::irq_ack()

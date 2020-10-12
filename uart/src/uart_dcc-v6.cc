@@ -81,22 +81,21 @@ namespace L4
   void Uart_dcc_v6::out_char(char c) const
   {
 #ifdef ARCH_arm
-    Poll_timeout_counter cnt(100000);
-    while (cnt.test(!tx_avail()))
-      ;
     asm volatile("mcr p14, 0, %0, c0, c5, 0": : "r" (c & 0xff));
 #else
     (void)c;
 #endif
   }
 
-  int Uart_dcc_v6::write(char const *s, unsigned long count) const
+  int Uart_dcc_v6::write(char const *s, unsigned long count,
+                         bool blocking) const
   {
 #ifdef ARCH_arm
-    return generic_write<Uart_dcc_v6>(s, count);
+    return generic_write<Uart_dcc_v6>(s, count, blocking);
 #else
     (void)s;
     (void)count;
+    (void)blocking;
     return count;
 #endif
   }

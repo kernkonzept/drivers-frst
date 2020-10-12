@@ -93,15 +93,11 @@ namespace L4
 
   void Uart_lpuart::out_char(char c) const
   {
-    Poll_timeout_counter i(3000000);
-    while (i.test(!tx_avail()))
-      ;
-
     _regs->write<unsigned char>(DATA, c);
   }
 
-  int Uart_lpuart::write(char const *s, unsigned long count) const
+  int Uart_lpuart::write(char const *s, unsigned long count, bool blocking) const
   {
-    return generic_write<Uart_lpuart>(s, count);
+    return generic_write<Uart_lpuart>(s, count, blocking);
   }
 }

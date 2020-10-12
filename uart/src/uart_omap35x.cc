@@ -102,14 +102,11 @@ namespace L4
 
   void Uart_omap35x::out_char(char c) const
   {
-    Poll_timeout_counter i(3000000);
-    while (i.test(!tx_avail()))
-      ;
     _regs->write<unsigned int>(THR_REG, c);
   }
 
-  int Uart_omap35x::write(char const *s, unsigned long count) const
+  int Uart_omap35x::write(char const *s, unsigned long count, bool blocking) const
   {
-    return generic_write<Uart_omap35x>(s, count);
+    return generic_write<Uart_omap35x>(s, count, blocking);
   }
 };

@@ -21,7 +21,8 @@ namespace L4
     int get_char(bool /*blocking*/ = true) const override { return 0; }
     int char_avail() const override { return false; }
     inline void out_char(char /*ch*/) const {}
-    int write(char const * /*str*/, unsigned long /*count*/) const override
+    int write(char const * /*str*/, unsigned long /*count*/,
+              bool /*blocking*/ = true) const override
     { return 0; }
   };
 };

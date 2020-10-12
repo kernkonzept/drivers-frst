@@ -50,8 +50,9 @@ namespace L4 {
     return len ? c :-1;
   }
 
-  int Uart_of::write(char const *s, unsigned long count) const
+  int Uart_of::write(char const *s, unsigned long count, bool) const
   {
+    /* non-blocked write ignored! */
     return prom_call("write", 3, 1, _serial, s, count);
   }
 

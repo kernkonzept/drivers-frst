@@ -172,18 +172,15 @@ namespace L4
   void Uart_sa1000::out_char(char c) const
   {
     // do UTCR3 thing here as well?
-    Poll_timeout_counter i(3000000);
-    while(i.test(!tx_avail()))
-      ;
     _regs->write<unsigned int>(UTDR, c);
   }
 
-  int Uart_sa1000::write(char const *s, unsigned long count) const
+  int Uart_sa1000::write(char const *s, unsigned long count, bool blocking) const
   {
     unsigned old_utcr3 = _regs->read<unsigned>(UTCR3);
     _regs->write<unsigned>(UTCR3, (old_utcr3 & ~(UTCR3_RIE | UTCR3_TIE)) | UTCR3_TXE );
 
-    int c = generic_write<Uart_sa1000>(s, count);
+    int c = generic_write<Uart_sa1000>(s, count, blocking);
 
     _regs->write<unsigned>(UTCR3, old_utcr3);
     return c;

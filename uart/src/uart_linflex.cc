@@ -141,29 +141,30 @@ namespace L4
 
   int Uart_linflex::tx_avail() const
   {
+    if (!Fifo_mode)
+      return true;
+
     return !(_regs->read<unsigned>(UARTSR) & UARTSR_DTFTFF);
   }
 
-  void Uart_linflex::out_char(char c) const
+  void Uart_linflex::wait_tx_done() const
   {
-    Poll_timeout_counter i(3000000);
-
-    if (Fifo_mode)
-      while (i.test(!tx_avail()))
-        ;
-
-    _regs->write<unsigned char>(BDRL, c);
-
     if (!Fifo_mode)
       {
+        Poll_timeout_counter i(3000000);
         while (!i.test(_regs->read<unsigned>(UARTSR) & UARTSR_DTFTFF))
           ;
         _regs->write<unsigned>(UARTSR, UARTSR_DTFTFF);
       }
   }
 
-  int Uart_linflex::write(char const *s, unsigned long count) const
+  void Uart_linflex::out_char(char c) const
   {
-    return generic_write<Uart_linflex>(s, count);
+    _regs->write<unsigned char>(BDRL, c);
+  }
+
+  int Uart_linflex::write(char const *s, unsigned long count, bool blocking) const
+  {
+    return generic_write<Uart_linflex>(s, count, blocking);
   }
 }

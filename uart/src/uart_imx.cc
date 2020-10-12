@@ -185,14 +185,11 @@ namespace L4
 
   void Uart_imx::out_char(char c) const
   {
-    Poll_timeout_counter i(3000000);
-    while (i.test(!tx_avail()))
-      ;
     _regs->write<unsigned int>(UTXD, c);
   }
 
-  int Uart_imx::write(char const *s, unsigned long count) const
+  int Uart_imx::write(char const *s, unsigned long count, bool blocking) const
   {
-    return generic_write<Uart_imx>(s, count);
+    return generic_write<Uart_imx>(s, count, blocking);
   }
 };

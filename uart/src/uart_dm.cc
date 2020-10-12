@@ -107,11 +107,6 @@ namespace L4
 
   void Uart_dm::out_char(char c) const
   {
-    // Wait until TX FIFO has space
-    Poll_timeout_counter i(3000000);
-    while (i.test(!tx_avail()))
-      ;
-
     _regs->write32(DM_TF, c);
   }
 
@@ -122,8 +117,8 @@ namespace L4
       ;
   }
 
-  int Uart_dm::write(char const *s, unsigned long count) const
+  int Uart_dm::write(char const *s, unsigned long count, bool blocking) const
   {
-    return generic_write<Uart_dm>(s, count);
+    return generic_write<Uart_dm>(s, count, blocking);
   }
 }

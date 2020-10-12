@@ -106,16 +106,12 @@ namespace L4
 
   void Uart_sh::out_char(char c) const
   {
-    Poll_timeout_counter i(3000000);
-    while (i.test(!tx_avail()))
-      ;
-
     _regs->write<unsigned char>(SCFTDR, c);
     _regs->clear<unsigned short>(SCFSR, SR_TEND | SR_TDFE);
   }
 
-  int Uart_sh::write(char const *s, unsigned long count) const
+  int Uart_sh::write(char const *s, unsigned long count, bool blocking) const
   {
-    return generic_write<Uart_sh>(s, count);
+    return generic_write<Uart_sh>(s, count, blocking);
   }
 }

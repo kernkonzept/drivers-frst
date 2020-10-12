@@ -35,7 +35,8 @@ namespace L4
     int tx_avail() const;
     void wait_tx_done() const;
     inline void out_char(char c) const;
-    int write(char const *s, unsigned long count) const override;
+    int write(char const *s, unsigned long count,
+              bool blocking = true) const override;
 
   private:
     enum platform_type _type;

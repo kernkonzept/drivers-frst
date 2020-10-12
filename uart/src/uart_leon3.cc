@@ -114,14 +114,11 @@ namespace L4
 
   void Uart_leon3::out_char(char c) const
   {
-    Poll_timeout_counter i(3000000);
-    while (i.test(!tx_avail()))
-      ;
     _regs->write<unsigned int>(DATA_REG, c);
   }
 
-  int Uart_leon3::write(char const *s, unsigned long count) const
+  int Uart_leon3::write(char const *s, unsigned long count, bool blocking) const
   {
-    return generic_write<Uart_leon3>(s, count);
+    return generic_write<Uart_leon3>(s, count, blocking);
   }
 };

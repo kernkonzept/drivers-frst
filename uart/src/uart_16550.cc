@@ -132,19 +132,16 @@ namespace L4
 
   void Uart_16550::out_char(char c) const
   {
-    Poll_timeout_counter i(5000000);
-    while (i.test(!tx_avail()))
-      ;
     _regs->write<unsigned char>(TRB, c);
   }
 
-  int Uart_16550::write(char const *s, unsigned long count) const
+  int Uart_16550::write(char const *s, unsigned long count, bool blocking) const
   {
     /* disable UART IRQs */
     unsigned char old_ier = _regs->read<unsigned char>(IER);
     _regs->write<unsigned char>(IER, old_ier & ~0x0f);
 
-    int c = generic_write<Uart_16550>(s, count);
+    int c = generic_write<Uart_16550>(s, count, blocking);
 
     _regs->write<unsigned char>(IER, old_ier);
     return c;

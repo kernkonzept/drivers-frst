@@ -11,6 +11,8 @@
 #include <stddef.h>
 #include <l4/drivers/io_regblock.h>
 
+#include "poll_timeout_counter.h"
+
 namespace L4
 {
   class Uart
@@ -84,9 +86,13 @@ namespace L4
      *
      * \param s         Buffer containing the characters.
      * \param count     Number of characters to transmit.
+     * \param blocking  If true, wait until there is space in the transmit
+     *                  buffer and also wait until every character was
+     *                  successful transmitted. Otherwise do not wait.
      * \return          The number of successfully written characters.
      */
-    virtual int write(char const *s, unsigned long count) const = 0;
+    virtual int write(char const *s, unsigned long count,
+                      bool blocking = true) const = 0;
 
     /**
      * Acknowledge a received interrupt.
@@ -123,19 +129,34 @@ namespace L4
      *
      * \param s          Buffer containing the characters.
      * \param count      The number of characters to transmit.
+     * \param blocking   If true, wait until there is space in the transmit
+     *                   buffer and also wait until every character was
+     *                   successful transmitted. Otherwise do not wait.
      * \return           The number of successful written characters.
      */
     template <typename Uart_driver>
-    int generic_write(char const *s, unsigned long count) const
+    int generic_write(char const *s, unsigned long count,
+                      bool blocking = true) const
     {
       auto *self = static_cast<Uart_driver const*>(this);
 
-      for (unsigned long c = count; c; --c)
-        self->out_char(*s++);
+      unsigned long c;
+      for (c = 0; c < count; ++c)
+        {
+          if (!blocking && !self->tx_avail())
+            break;
 
-      self->wait_tx_done();
+          Poll_timeout_counter i(3000000);
+          while (i.test(!self->tx_avail()))
+            ;
 
-      return count;
+          self->out_char(*s++);
+        }
+
+      if (blocking)
+        self->wait_tx_done();
+
+      return c;
     }
   };
 }
