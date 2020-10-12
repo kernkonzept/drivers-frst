@@ -104,6 +104,14 @@ namespace L4
     return !(_regs->read<unsigned int>(STATUS_REG) & STATUS_TF);
   }
 
+  void Uart_leon3::wait_tx_done() const
+  {
+    enum { Tx_empty = STATUS_TS | STATUS_TE }; /* be conservative */
+    Poll_timeout_counter i(3000000);
+    while (i.test((_regs->read<unsigned int>(STATUS_REG) & Tx_empty) != Tx_empty))
+      ;
+  }
+
   void Uart_leon3::out_char(char c) const
   {
     Poll_timeout_counter i(3000000);

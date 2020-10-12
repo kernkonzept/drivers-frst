@@ -23,7 +23,7 @@ namespace L4
     int get_char(bool blocking = true) const override;
     int char_avail() const override;
     int tx_avail() const;
-    void wait_tx_done() const {}
+    void wait_tx_done() const;
     bool enable_rx_irq(bool = true) override;
     inline void out_char(char c) const;
     int write(char const *s, unsigned long count) const override;
