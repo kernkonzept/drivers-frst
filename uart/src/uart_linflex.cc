@@ -18,6 +18,8 @@ namespace L4
     LINSR  = 0x08,
     UARTCR = 0x10,
     UARTSR = 0x14,
+    FBRR   = 0x24,
+    IBRR   = 0x28,
     BDRL   = 0x38,
     BDRM   = 0x3c,
 
@@ -52,6 +54,10 @@ namespace L4
     UARTSR_RMB    = 1 << 9,
   };
 
+  Uart_linflex::Uart_linflex(unsigned clk)
+  : _clk(clk)
+  {}
+
   bool Uart_linflex::startup(Io_register_block const *regs)
   {
     _regs = regs;
@@ -81,6 +87,9 @@ namespace L4
 
     _regs->write<unsigned>(UARTCR, v);
     _regs->write<unsigned int>(UARTSR, UARTSR_DRFRFE | UARTSR_RMB);
+
+    change_mode(0, 115200);
+
     _regs->clear<unsigned>(LINCR1, LINCR1_INIT);
 
     return true;
@@ -106,7 +115,11 @@ namespace L4
 
   bool Uart_linflex::change_mode(Transfer_mode, Baud_rate r)
   {
-    (void)r;
+    unsigned br = _clk / r;
+    unsigned ibr = br / 16U;
+    unsigned fbr = br - (ibr * 16U);
+    _regs->set<unsigned>(IBRR, ibr);
+    _regs->set<unsigned>(FBRR, fbr);
     return true;
   }
 

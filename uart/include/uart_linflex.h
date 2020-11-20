@@ -13,8 +13,9 @@ namespace L4
 {
   class Uart_linflex : public Uart
   {
+    unsigned _clk;
   public:
-    explicit Uart_linflex(unsigned) {}
+    explicit Uart_linflex(unsigned);
     bool startup(Io_register_block const *) override;
     void shutdown() override;
     bool enable_rx_irq(bool enable = true) override;
