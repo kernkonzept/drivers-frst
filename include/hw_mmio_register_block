@@ -8,6 +8,7 @@
 #pragma once
 
 #include <l4/drivers/hw_register_block>
+#include <l4/drivers/asm_access.h>
 
 namespace L4drivers {
 
@@ -26,11 +27,11 @@ public:
 
   template< typename T >
   T read(l4_addr_t reg) const
-  { return *reinterpret_cast<volatile const T *>(_base + (reg << _shift)); }
+  { return Asm_access::read(reinterpret_cast<T const *>(_base + (reg << _shift))); }
 
   template< typename T >
   void write(T value, l4_addr_t reg) const
-  { *reinterpret_cast<volatile T *>(_base + (reg << _shift)) = value; }
+  { Asm_access::write(value, reinterpret_cast<T *>(_base + (reg << _shift))); }
 
   void set_base(l4_addr_t base) { _base = base; }
   void set_shift(l4_addr_t shift) { _shift = shift; }
