@@ -16,7 +16,7 @@ read(l4_uint8_t const *mem)
 {
   l4_uint8_t val;
 
-  asm volatile ("movb %[mem], %[val]" : [val] "=r" (val) : [mem] "m" (*mem));
+  asm volatile ("movb %[mem], %[val]" : [val] "=q" (val) : [mem] "m" (*mem));
 
   return val;
 }
@@ -47,7 +47,7 @@ inline
 void
 write(l4_uint8_t val, l4_uint8_t *mem)
 {
-  asm volatile ("movb %[val], %[mem]" :[mem]  "=m" (*mem) : [val] "ri" (val));
+  asm volatile ("movb %[val], %[mem]" :[mem]  "=m" (*mem) : [val] "qi" (val));
 }
 
 inline
