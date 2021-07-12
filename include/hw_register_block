@@ -11,7 +11,7 @@
 namespace L4drivers {
 
 
-/* EXAMPLE usage:
+/** EXAMPLE usage:
 
 \code
 
