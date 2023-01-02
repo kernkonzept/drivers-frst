@@ -30,7 +30,7 @@ public:
   virtual Nand_ctrl *create(l4_umword_t base) = 0;
 };
 
-struct Nand *arm_nand_probe(const char *configstr, l4_addr_t base);
+class Nand *arm_nand_probe(const char *configstr, l4_addr_t base);
 
 void arm_nand_register_driver(Nand_drv *nand_drv);
 
