@@ -227,7 +227,7 @@ public:
  * \brief Single hardware register inside a Register_block_base interface.
  * \tparam BITS The access width for the register in bits.
  * \tparam BLOCK the type of the Register_block_base interface.
- * \note Objects of this type msut be used only in temporary contexts
+ * \note Objects of this type must be used only in temporary contexts
  *       not in global, class, or object scope.
  */
 template< unsigned BITS, typename BLOCK >
