@@ -6,8 +6,7 @@
  * GNU General Public License 2.
  * Please see the COPYING-GPL-2 file for details.
  */
-#ifndef L4_CXX_UART_imx_H__
-#define L4_CXX_UART_imx_H__
+#pragma once
 
 #include "uart_base.h"
 
@@ -80,5 +79,3 @@ namespace L4
     Uart_imx8() : Uart_imx(Type_imx8) {}
   };
 };
-
-#endif

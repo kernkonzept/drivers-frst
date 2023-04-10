@@ -4,8 +4,7 @@
  * GNU General Public License 2.
  * Please see the COPYING-GPL-2 file for details.
  */
-#ifndef L4_CXX_UART_DCC_V6_H__
-#define L4_CXX_UART_DCC_V6_H__
+#pragma once
 
 #include "uart_base.h"
 
@@ -27,5 +26,3 @@ namespace L4
     unsigned get_status() const;
   };
 };
-
-#endif

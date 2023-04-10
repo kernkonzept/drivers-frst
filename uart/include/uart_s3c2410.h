@@ -6,8 +6,7 @@
  * GNU General Public License 2.
  * Please see the COPYING-GPL-2 file for details.
  */
-#ifndef L4_DRIVERS_UART_S3C2410_H__
-#define L4_DRIVERS_UART_S3C2410_H__
+#pragma once
 
 #include "uart_base.h"
 
@@ -84,5 +83,3 @@ namespace L4
     unsigned is_tx_fifo_not_full() const override;
   };
 };
-
-#endif

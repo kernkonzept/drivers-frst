@@ -6,8 +6,7 @@
  * GNU General Public License 2.
  * Please see the COPYING-GPL-2 file for details.
  */
-#ifndef L4_CXX_UART_PL011_H__
-#define L4_CXX_UART_PL011_H__
+#pragma once
 
 #include "uart_base.h"
 
@@ -34,5 +33,3 @@ namespace L4
     unsigned _freq;
   };
 };
-
-#endif

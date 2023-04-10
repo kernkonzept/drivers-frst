@@ -7,8 +7,7 @@
  * GNU General Public License 2.
  * Please see the COPYING-GPL-2 file for details.
  */
-#ifndef __L4_CXX_UART_SA1000_H__
-#define __L4_CXX_UART_SA1000_H__
+#pragma once
 
 #include "uart_base.h"
 
@@ -28,5 +27,3 @@ namespace L4
     int write(char const *s, unsigned long count) const override;
   };
 };
-
-#endif
