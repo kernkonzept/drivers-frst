@@ -68,11 +68,6 @@ namespace L4
       Base_rate_pxa = 921600,
     };
 
-    enum Init_flags
-    {
-      F_skip_init = 1,
-    };
-
     explicit Uart_16550(unsigned long base_rate, unsigned char init_flags = 0,
                         unsigned char ier_bits = 0,
                         unsigned char mcr_bits = 0, unsigned char fcr_bits = 0)

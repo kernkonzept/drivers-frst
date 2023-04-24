@@ -48,17 +48,14 @@ namespace L4
       return false;  // this is not the uart
 #endif
 
-    if (!(_init_flags & F_skip_init))
-      {
-        /* disable all rs-232 interrupts */
-        _regs->write<unsigned char>(IER, _ier_bits);
-        /* rts, and dtr enabled */
-        _regs->write<unsigned char>(MCR, _mcr_bits | 3);
-        /* enable fifo */
-        _regs->write<unsigned char>(FCR, _fcr_bits | 1);
-        /* clear line control register: set to (8N1) */
-        _regs->write<unsigned char>(LCR, 3);
-      }
+    /* disable all rs-232 interrupts */
+    _regs->write<unsigned char>(IER, _ier_bits);
+    /* rts, and dtr enabled */
+    _regs->write<unsigned char>(MCR, _mcr_bits | 3);
+    /* enable fifo */
+    _regs->write<unsigned char>(FCR, _fcr_bits | 1);
+    /* clear line control register: set to (8N1) */
+    _regs->write<unsigned char>(LCR, 3);
 
     /* clearall interrupts */
     _regs->read<unsigned char>(MSR); /* IRQID 0*/
