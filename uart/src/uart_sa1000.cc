@@ -1,11 +1,6 @@
-/*!
- * \file   uart_sa1000.cc
- * \brief  SA1000 Uart
- *
- * \date   2008-01-02
- * \author Adam Lackorzynski <adam@os.inf.tu-dresden.de>
- *         Alexander Warg <alexander.warg@os.inf.tu-dresden.de>
- *
+/* SPDX-License-Identifier: GPL-2.0-only OR License-Ref-kk-custom */
+/*
+ * Copyright (C) 2023 Kernkonzept GmbH.
  */
 /*
  * (c) 2008-2009 Author(s)
@@ -14,6 +9,16 @@
  * This file is part of TUD:OS and distributed under the terms of the
  * GNU General Public License 2.
  * Please see the COPYING-GPL-2 file for details.
+ */
+
+/*!
+ * \file   uart_sa1000.cc
+ * \brief  SA1000 Uart
+ *
+ * \date   2008-01-02
+ * \author Adam Lackorzynski <adam@os.inf.tu-dresden.de>
+ *         Alexander Warg <alexander.warg@os.inf.tu-dresden.de>
+ *
  */
 
 #include "uart_sa1000.h"

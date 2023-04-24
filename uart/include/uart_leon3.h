@@ -1,3 +1,7 @@
+/* SPDX-License-Identifier: GPL-2.0-only OR License-Ref-kk-custom */
+/*
+ * Copyright (C) 2023 Kernkonzept GmbH.
+ */
 /*
  * (c) 2011 Adam Lackorzynski <adam@os.inf.tu-dresden.de>
  *          Björn Döbel <doebel@os.inf.tu-dresden.de>

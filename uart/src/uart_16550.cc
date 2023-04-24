@@ -1,11 +1,6 @@
-/*!
- * \file   uart_16550.cc
- * \brief  16550 UART implementation
- *
- * \date   2008-01-04
- * \author Adam Lackorzynski <adam@os.inf.tu-dresden.de>
- *         Alexander Warg <alexander.warg@os.inf.tu-dresden.de>
- *
+/* SPDX-License-Identifier: GPL-2.0-only OR License-Ref-kk-custom */
+/*
+ * Copyright (C) 2023 Kernkonzept GmbH.
  */
 /*
  * (c) 2008-2009 Author(s)
@@ -14,6 +9,16 @@
  * This file is part of TUD:OS and distributed under the terms of the
  * GNU General Public License 2.
  * Please see the COPYING-GPL-2 file for details.
+ */
+
+/*!
+ * \file   uart_16550.cc
+ * \brief  16550 UART implementation
+ *
+ * \date   2008-01-04
+ * \author Adam Lackorzynski <adam@os.inf.tu-dresden.de>
+ *         Alexander Warg <alexander.warg@os.inf.tu-dresden.de>
+ *
  */
 #include "uart_16550.h"
 #include "poll_timeout_counter.h"
