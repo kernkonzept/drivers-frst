@@ -19,6 +19,8 @@ namespace L4
   class Uart_dummy : public Uart
   {
   public:
+    explicit Uart_dummy() {}
+    explicit Uart_dummy(unsigned /*base_rate*/) {}
     bool startup(Io_register_block const *) override { return true; }
     void shutdown() override {}
     bool change_mode(Transfer_mode, Baud_rate) override { return true; }

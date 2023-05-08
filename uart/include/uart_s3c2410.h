@@ -28,6 +28,7 @@ namespace L4
 
   public:
     explicit Uart_s3c(Uart_type type) : _type(type) {}
+    explicit Uart_s3c(Uart_type type, unsigned /*base_rate*/) : _type(type) {}
     bool startup(Io_register_block const *) override;
     void shutdown() override;
     bool change_mode(Transfer_mode m, Baud_rate r) override;
@@ -54,6 +55,7 @@ namespace L4
   {
   public:
     Uart_s3c2410() : Uart_s3c(Type_24xx) {}
+    explicit Uart_s3c2410(unsigned base_rate) : Uart_s3c(Type_24xx, base_rate) {}
 
   protected:
     void ack_rx_irq() const override {}
@@ -68,6 +70,7 @@ namespace L4
   {
   public:
     Uart_s3c64xx() : Uart_s3c(Type_64xx) {}
+    explicit Uart_s3c64xx(unsigned base_rate) : Uart_s3c(Type_64xx, base_rate) {}
 
   protected:
     void ack_rx_irq() const override;
@@ -80,6 +83,7 @@ namespace L4
   {
   public:
     Uart_s5pv210() : Uart_s3c(Type_s5pv210) {}
+    explicit Uart_s5pv210(unsigned base_rate) : Uart_s3c(Type_s5pv210, base_rate) {}
 
   protected:
     void ack_rx_irq() const override;

@@ -20,6 +20,8 @@ namespace L4
   class Uart_sa1000 : public Uart
   {
   public:
+    explicit Uart_sa1000() {}
+    explicit Uart_sa1000(unsigned /*base_rate*/) {}
     bool startup(Io_register_block const *) override;
     void shutdown() override;
     bool change_mode(Transfer_mode m, Baud_rate r) override;

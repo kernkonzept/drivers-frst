@@ -19,10 +19,7 @@ namespace L4
   class Uart_cadence : public Uart
   {
   public:
-    explicit Uart_cadence(unsigned base_rate)
-    : _base_rate(base_rate)
-    {}
-
+    explicit Uart_cadence(unsigned base_rate) : _base_rate(base_rate) {}
     bool startup(Io_register_block const *) override;
     void shutdown() override;
     bool change_mode(Transfer_mode m, Baud_rate r) override;

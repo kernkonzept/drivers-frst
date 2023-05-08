@@ -19,6 +19,8 @@ namespace L4
   class Uart_omap35x : public Uart
   {
   public:
+    explicit Uart_omap35x() {}
+    explicit Uart_omap35x(unsigned /*base_rate*/) {}
     bool startup(Io_register_block const *) override;
     void shutdown() override;
     bool change_mode(Transfer_mode m, Baud_rate r) override;
