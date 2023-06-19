@@ -19,6 +19,9 @@
 
 namespace L4
 {
+  /**
+   * Uart driver abstraction.
+   */
   class Uart
   {
   protected:

@@ -11,9 +11,11 @@
 namespace L4drivers {
 
 
-/** EXAMPLE usage:
+/**
+ * \class Register_block
+ * \details Example usage:
 
-\code
+\code{.cpp}
 
 void test()
 {
@@ -312,8 +314,8 @@ public:
  *        maximum access width.
  * \tparam MAX_BITS Maximum access width for the registers in this
  *         block.
- * \tparam BLOCK Type implementing the register accesses (read<>(), write<>(),
- *                modify<>(), set<>(), and clear<>()).
+ * \tparam BLOCK Type implementing the register accesses (`read<>()`,
+ *               `write<>()`, `modify<>()`, `set<>()`, and `clear<>()`).
  *
  * Provides access to registers in this block via r<WIDTH>() and
  * operator[]().

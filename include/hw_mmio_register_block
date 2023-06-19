@@ -12,9 +12,6 @@
 
 namespace L4drivers {
 
-/**
- * An MMIO block with 32 bit registers and little endian byte order.
- */
 class Mmio_register_block_base
 {
 protected:
@@ -37,6 +34,10 @@ public:
   void set_shift(l4_addr_t shift) { _shift = shift; }
 };
 
+/**
+ * An MMIO block with up to 64-bit register access (32-bit default) and little
+ * endian byte order.
+ */
 template< unsigned MAX_BITS = 32 >
 struct Mmio_register_block
 : Register_block_impl<Mmio_register_block<MAX_BITS>, MAX_BITS>,
