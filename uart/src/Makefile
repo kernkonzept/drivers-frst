@@ -18,4 +18,5 @@ INCLUDE_MAKE_RULES = $(SRC_DIR)/*/Make.rules
 include $(L4DIR)/mk/lib.mk
 
 CXXFLAGS += -DL4_NO_RTTI -fno-exceptions -fno-rtti
+CXXFLAGS_arm64  += -mstrict-align
 
