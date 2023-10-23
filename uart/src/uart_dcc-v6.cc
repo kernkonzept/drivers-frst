@@ -54,6 +54,7 @@ namespace L4
     asm volatile("mrc p14, 0, %0, c0, c5, 0": "=r" (c));
     return c & 0xff;
 #else
+    (void)blocking;
     return -1;
 #endif
   }
