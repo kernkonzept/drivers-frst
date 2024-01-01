@@ -148,7 +148,9 @@ private:
   l4_uint64_t _pad2;
   l4_uint64_t _int_status;   // 0x20
   l4_uint64_t _pad3[(0xf0 - 0x28) / sizeof(l4_uint64_t)];
-  l4_uint64_t _main_counter;
-} __attribute__((packed));
+  l4_uint64_t _main_counter; // 0xf0
+  l4_uint64_t _pad4;
+};
+static_assert(sizeof(Hpet) == 0x100, "Check size of MMIO registers");
 
 }
