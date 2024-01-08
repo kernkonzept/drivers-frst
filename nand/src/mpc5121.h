@@ -72,5 +72,5 @@ private:
   
   volatile u32 *_buffer_main;
   u32 *_buffer_spare;
-  u32 _buffer_ptr;
+  u32 _buffer_ptr = 0;
 };

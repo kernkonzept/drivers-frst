@@ -311,6 +311,5 @@ int Nand_ctrl::scan(int maxchips)
 }
 
 Nand_ctrl::Nand_ctrl()
-  : size(0)
 {}
 

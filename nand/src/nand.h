@@ -194,11 +194,11 @@ protected:
   virtual int get_id(char id[4]);
 
 public:
-  const char *name;
-  unsigned numchips;
-  u64 size;
-  u32 sz_erase;
-  u32 sz_write;
-  u32 sz_spare;
+  const char *name  = 0;
+  unsigned numchips = 0;
+  u64 size          = 0;
+  u32 sz_erase      = 0;
+  u32 sz_write      = 0;
+  u32 sz_spare      = 0;
 };
 
