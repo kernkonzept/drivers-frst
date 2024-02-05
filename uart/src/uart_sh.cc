@@ -70,7 +70,7 @@ namespace L4
 
   bool Uart_sh::change_mode(Transfer_mode, Baud_rate r)
   {
-    (void)r;
+    static_cast<void>(r);
     // Set 8N1 and clock rate in SCSMR
     return true;
   }
