@@ -13,7 +13,7 @@ namespace L4
 {
   /**
    * Driver for the Advanced Peripheral Bus (APB) UART from the Cortex-M System
-   * Design Kit (apb).
+   * Design Kit (CMSDK).
    */
   class Uart_apb : public Uart
   {
