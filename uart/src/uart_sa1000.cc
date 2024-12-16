@@ -1,9 +1,8 @@
 /*
+ * Copyright (C) 2008-2009 Technische Universität Dresden.
  * Copyright (C) 2023 Kernkonzept GmbH.
- */
-/*
- * (c) 2008-2009 Author(s)
- *     economic rights: Technische Universität Dresden (Germany)
+ * Author(s): Adam Lackorzynski <adam@os.inf.tu-dresden.de>
+ *            Alexander Warg <alexander.warg@os.inf.tu-dresden.de>
  *
  * License: see LICENSE.spdx (in this directory or the directories above)
  */
@@ -13,9 +12,6 @@
  * \brief  SA1000 Uart
  *
  * \date   2008-01-02
- * \author Adam Lackorzynski <adam@os.inf.tu-dresden.de>
- *         Alexander Warg <alexander.warg@os.inf.tu-dresden.de>
- *
  */
 
 #include "uart_sa1000.h"

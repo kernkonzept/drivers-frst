@@ -1,6 +1,7 @@
 // vi:set ft=cpp: -*- Mode: C++ -*-
 /*
- * (c) 2014-2021 Alexander Warg <alexander.warg@kernkonzept.com>
+ * Copyright (C) 2014-2021 Kernkonzept GmbH.
+ * Author(s): Alexander Warg <alexander.warg@kernkonzept.com>
  *
  * License: see LICENSE.spdx (in this directory or the directories above)
  */

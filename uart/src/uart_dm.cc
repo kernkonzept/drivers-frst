@@ -6,6 +6,7 @@
  */
 
 /**
+ * \file
  * Driver for Qualcomm "UART with Data Mover" (or sometimes serial_msm),
  * used in many older Qualcomm platforms such as the Snapdragon 210 and 410.
  *

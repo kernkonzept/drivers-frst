@@ -1,9 +1,7 @@
 /*
+ * Copyright 2009 Technische Universität Dresden.
  * Copyright (C) 2023 Kernkonzept GmbH.
- */
-/*
- * (c) 2009 Adam Lackorzynski <adam@os.inf.tu-dresden.de>
- *     economic rights: Technische Universität Dresden (Germany)
+ * Author(s): Adam Lackorzynski <adam@os.inf.tu-dresden.de>
  *
  * License: see LICENSE.spdx (in this directory or the directories above)
  */

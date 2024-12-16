@@ -1,9 +1,7 @@
 /*
+ * Copyright (C) 2015 Technische Universität Dresden.
  * Copyright (C) 2023 Kernkonzept GmbH.
- */
-/*
- * (c) 2015
- *     economic rights: Technische Universität Dresden (Germany)
+ * Author(s): Adam Lackorzynski <adam@l4re.org>
  *
  * License: see LICENSE.spdx (in this directory or the directories above)
  */
@@ -11,9 +9,6 @@
 /*!
  * \file   uart_16550_dw.cc
  * \brief  Implementation of DW-based 16550 UART
- *
- * \author Adam Lackorzynski <adam@l4re.org>
- *
  */
 #include "uart_16550_dw.h"
 

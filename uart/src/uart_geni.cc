@@ -6,6 +6,7 @@
  */
 
 /**
+ * \file
  * Driver for Qualcomm "Generic Interface (GENI) Serial Engine (SE)",
  * used in most Qualcomm platforms starting from the Snapdragon 845.
  *

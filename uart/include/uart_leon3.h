@@ -1,10 +1,8 @@
 /*
+ * Copyright (C) 2011 Technische Universität Dresden.
  * Copyright (C) 2023 Kernkonzept GmbH.
- */
-/*
- * (c) 2011 Adam Lackorzynski <adam@os.inf.tu-dresden.de>
- *          Björn Döbel <doebel@os.inf.tu-dresden.de>
- *     economic rights: Technische Universität Dresden (Germany)
+ * Author(s): Adam Lackorzynski <adam@os.inf.tu-dresden.de>
+ *            Björn Döbel <doebel@os.inf.tu-dresden.de>
  *
  * License: see LICENSE.spdx (in this directory or the directories above)
  */
