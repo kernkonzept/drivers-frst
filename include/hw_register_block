@@ -13,52 +13,51 @@ namespace L4drivers {
 
 
 /**
+ * Register block.
  * \class Register_block
  * \details Example usage:
-
-\code{.cpp}
-
-void test()
-{
-  // create a register block reference for max. 16bit accesses, using a
-  // MMIO register block implementation (at address 0x1000).
-  Hw::Register_block<16> regs = new Hw::Mmio_register_block<16>(0x1000);
-
-  // Alternatively it is allowed to use an implementation that allows
-  // wider access than actually needed.
-  Hw::Register_block<16> regs = new Hw::Mmio_register_block<32>(0x1000);
-
-  // read a 16bit register at offset 8byte
-  unsigned short x = regs.r<16>(8);
-  unsigned short x1 = regs[8];      // alternative
-
-  // read an 8bit register at offset 0byte
-  unsigned v = regs.r<8>(0);
-
-  // do a 16bit write to register at offset 2byte (four variants)
-  regs[2] = 22;
-  regs.r<16>(2) = 22;
-  regs[2].write(22);
-  regs.r<16>().write(22);
-
-  // do an 8bit write (two variants)
-  regs.r<8>(0) = 9;
-  regs.r<8>(0).write(9);
-
-  // do 16bit read-modify-write (two variants)
-  regs[4].modify(0xf, 3); // clear 4 lowest bits and set them to 3
-  regs.r<16>(4).modify(0xf, 3);
-
-  // do 8bit read-modify-write
-  regs.r<8>(0).modify(0xf, 3);
-
-  // fails to compile, because of too wide access
-  // (32 bit access but regs is Hw::Register_block<16>)
-  unsigned long v = regs.r<32>(4)
-}
-
-\endcode
-*/
+ *
+ * \code{.cpp}
+ * void test()
+ * {
+ *   // create a register block reference for max. 16bit accesses, using a
+ *   // MMIO register block implementation (at address 0x1000).
+ *   Hw::Register_block<16> regs = new Hw::Mmio_register_block<16>(0x1000);
+ *
+ *   // Alternatively it is allowed to use an implementation that allows
+ *   // wider access than actually needed.
+ *   Hw::Register_block<16> regs = new Hw::Mmio_register_block<32>(0x1000);
+ *
+ *   // read a 16bit register at offset 8byte
+ *   unsigned short x = regs.r<16>(8);
+ *   unsigned short x1 = regs[8];      // alternative
+ *
+ *   // read an 8bit register at offset 0byte
+ *   unsigned v = regs.r<8>(0);
+ *
+ *   // do a 16bit write to register at offset 2byte (four variants)
+ *   regs[2] = 22;
+ *   regs.r<16>(2) = 22;
+ *   regs[2].write(22);
+ *   regs.r<16>().write(22);
+ *
+ *   // do an 8bit write (two variants)
+ *   regs.r<8>(0) = 9;
+ *   regs.r<8>(0).write(9);
+ *
+ *   // do 16bit read-modify-write (two variants)
+ *   regs[4].modify(0xf, 3); // clear 4 lowest bits and set them to 3
+ *   regs.r<16>(4).modify(0xf, 3);
+ *
+ *   // do 8bit read-modify-write
+ *   regs.r<8>(0).modify(0xf, 3);
+ *
+ *   // fails to compile, because of too wide access
+ *   // (32 bit access but regs is Hw::Register_block<16>)
+ *   unsigned long v = regs.r<32>(4)
+ * }
+ * \endcode
+ */
 
 
 /**
