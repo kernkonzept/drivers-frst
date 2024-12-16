@@ -6,13 +6,6 @@
  */
 #pragma once
 
-#ifndef __GXX_EXPERIMENTAL_CXX0X__
-#ifndef static_assert
-#define static_assert(x, y) \
-  do { (void)sizeof(char[-(!(x))]); } while (0)
-#endif
-#endif
-
 namespace L4
 {
   class Io_register_block
@@ -82,13 +75,14 @@ namespace L4
     template< typename R >
     R read(unsigned long reg) const
     {
+      static_assert(sizeof(R) == 1 || sizeof(R) == 2 || sizeof(R) == 4,
+                    "Invalid size");
+
       switch (sizeof(R))
         {
         case 1: return read8(reg);
         case 2: return read16(reg);
         case 4: return read32(reg);
-        default: static_assert(sizeof(R) == 1 || sizeof(R) == 2 || sizeof(R) == 4,
-                               "Invalid size");
         };
     }
 
@@ -102,13 +96,14 @@ namespace L4
     template< typename R >
     void write(unsigned long reg, R value) const
     {
+      static_assert(sizeof(R) == 1 || sizeof(R) == 2 || sizeof(R) == 4,
+                    "Invalid size");
+
       switch (sizeof(R))
         {
         case 1: write8(reg, value); return;
         case 2: write16(reg, value); return;
         case 4: write32(reg, value); return;
-        default: static_assert(sizeof(R) == 1 || sizeof(R) == 2 || sizeof(R) == 4,
-                               "Invalid size");
         };
     }
 
