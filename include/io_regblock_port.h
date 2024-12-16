@@ -17,7 +17,7 @@ namespace L4
     : _base(base)
     {}
 
-    unsigned long addr(unsigned long reg) const { return _base + reg; }
+    unsigned long addr(unsigned long reg) const override { return _base + reg; }
 
     unsigned char  read8(unsigned long reg) const override
     {
