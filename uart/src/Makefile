@@ -1,7 +1,7 @@
 PKGDIR         ?= ../..
 L4DIR          ?= $(PKGDIR)/../..
 
-SRC_CC-riscv   := uart_sbi.cc
+SRC_CC-riscv   := uart_sbi.cc uart_sifive.cc
 SRC_CC         += uart_pl011.cc uart_sa1000.cc \
                   uart_16550.cc uart_omap35x.cc uart_imx.cc \
                   uart_s3c2410.cc uart_of.cc uart_leon3.cc \
