@@ -42,7 +42,7 @@ void Gpmc::add(Nand_chip *chip)
   _chips[0] = chip;
 }
 
-Nand_chip *Gpmc::select(loff_t /*addr*/)
+Nand_chip *Gpmc::select(u32 /*addr*/)
 {
   // XXX hack:we currently have only one chip
   return _chips[0];

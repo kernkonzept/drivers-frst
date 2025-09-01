@@ -42,7 +42,7 @@ public:
   
 protected:
   void add(Nand_chip *chip);
-  Nand_chip *select(loff_t addr);
+  Nand_chip *select(u32 addr);
   
   void wr_cmd(u8 c);
   void wr_adr(u8 a);

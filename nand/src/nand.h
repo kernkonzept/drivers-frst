@@ -178,7 +178,7 @@ protected:
   int scan(int maxchips);
 
   virtual void add(Nand_chip *chip) = 0;
-  virtual Nand_chip *select(loff_t addr) = 0;
+  virtual Nand_chip *select(u32 addr) = 0;
   
   virtual void wr_cmd(u8 c) = 0;
   virtual void wr_adr(u8 a) = 0;

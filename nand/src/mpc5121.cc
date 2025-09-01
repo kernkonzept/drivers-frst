@@ -78,7 +78,7 @@ void Mpc5121::add(Nand_chip *chip)
   _chips[0] = chip;
 }
 
-Nand_chip *Mpc5121::select(loff_t /*addr*/)
+Nand_chip *Mpc5121::select(u32 /*addr*/)
 {
   return _chips[0];
 }
