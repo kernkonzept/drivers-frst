@@ -1,8 +1,10 @@
 #pragma once
 
 #include <string.h>
+#include <strings.h>
 
 #include "types.h"
+#include "stdint.h"
 #include <l4/drivers-frst/transfer.h>
 
 struct Op
@@ -24,7 +26,7 @@ struct Erase_op : Op
 {
   u32 addr;
   u32 len;
-  u_char state;
+  uint8_t state;
 };
 
 
