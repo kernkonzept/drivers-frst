@@ -190,6 +190,11 @@ namespace L4
     void delay() const override
     {}
 
+    void set_base(unsigned long base) { _base = base; }
+    void set_shift(unsigned char shift) { _shift = shift; }
+
+    unsigned long get_base() const { return _base; }
+
   private:
     unsigned long _base;
     unsigned char _shift;

@@ -33,6 +33,8 @@ public:
 
   void set_base(l4_addr_t base) { _base = base; }
   void set_shift(l4_addr_t shift) { _shift = shift; }
+
+  l4_addr_t get_base() const { return _base; }
 };
 
 /**
