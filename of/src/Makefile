@@ -10,4 +10,4 @@ PRIVATE_INCDIR += $(SRC_DIR)/../include
 
 include $(L4DIR)/mk/lib.mk
 
-CXXFLAGS += -DL4_NO_RTTI -fno-exceptions -fno-rtti
+CXXFLAGS += -fno-exceptions -fno-rtti
