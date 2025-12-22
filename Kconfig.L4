@@ -1,0 +1,89 @@
+menu "UART drivers"
+
+config DRIVERS_FRST_UART_ALL_DRIVERS
+        bool "Select all UART drivers"
+        default y if !EXPERT
+        depends on !EXPERT
+
+config DRIVERS_FRST_UART_DRV_PL011
+        bool "pl011" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_8250
+        bool "8259/16450/16550" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_ABP
+        bool "ABP" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_ARM_DCC
+        bool "Arm DCC" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_CADENCE
+        bool "Cadence" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_DM
+        bool "dm" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_GENI
+        bool "geni" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_IMX
+        bool "imx" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_LEON3
+        bool "leon3" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_LINFLEX
+        bool "linflex" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_LPUART
+        bool "lpuart" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_MVEBU
+        bool "mvebu" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_OF
+        bool "of" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_OMAP35X
+        bool "omap35x" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_S3C2410
+        bool "s3c2410" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_SA1000
+        bool "sa1000" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_SBI
+        bool "sbi" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        depends on BUILD_ARCH_riscv
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_SH
+        bool "sh" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_SIFIVE
+        bool "sifive" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+config DRIVERS_FRST_UART_DRV_TEGRA_TCU
+        bool "tegra-tcu" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
+endmenu
