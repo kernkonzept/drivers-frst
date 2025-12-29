@@ -23,6 +23,7 @@ SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_SBI)       += uart_sbi.cc
 SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_SIFIVE)    += uart_sifive.cc
 SYSTEMS         = $(SYSTEMS_PLAIN)
 TARGET          = libdrivers_uart.a libdrivers_uart.p.a
+PC_LIBS_WHOLELIB = y
 PC_FILENAME     = drivers_uart
 
 PRIVATE_INCDIR += $(SRC_DIR)/../include $(SRC_DIR)/../../include
