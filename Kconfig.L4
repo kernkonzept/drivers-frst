@@ -2,7 +2,7 @@ menu "UART drivers"
 
 config DRIVERS_FRST_UART_ALL_DRIVERS
         bool "Select all UART drivers"
-        default y if !EXPERT
+        default y
 
 config DRIVERS_FRST_UART_DRV_PL011
         bool "pl011" if !DRIVERS_FRST_UART_ALL_DRIVERS
