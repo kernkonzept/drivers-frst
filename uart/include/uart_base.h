@@ -203,11 +203,15 @@ l4re_dev_uart_create_by_dt_compatible_once(const char *dt_compatible, unsigned f
   if (once_done)
     return nullptr;
 
-  once_done = true;
   static char __attribute__((aligned(sizeof(long) * 2))) obj_buf[64];
-  return l4re_dev_uart_create_by_dt_compatible(dt_compatible,
-                                               obj_buf, sizeof(obj_buf),
-                                               freq);
+  L4::Uart *uart
+    = l4re_dev_uart_create_by_dt_compatible(dt_compatible,
+                                            obj_buf, sizeof(obj_buf),
+                                            freq);
+  if (uart)
+    once_done = true;
+
+  return uart;
 }
 
 #define l4re_register_device_uart(Device_class, instance_name, \
