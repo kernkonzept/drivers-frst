@@ -3,7 +3,9 @@ L4DIR          ?= $(PKGDIR)/../..
 
 SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_PL011)     += uart_pl011.cc
 SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_SA1000)    += uart_sa1000.cc
-SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_8250)      += uart_16550.cc uart_16550_dw.cc
+SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_8250)      += uart_16550.cc \
+                                                    uart_16550_dw.cc \
+                                                    uart_bcm2835.cc
 SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_OMAP35X)   += uart_omap35x.cc
 SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_IMX)       += uart_imx.cc
 SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_S3C2410)   += uart_s3c2410.cc
