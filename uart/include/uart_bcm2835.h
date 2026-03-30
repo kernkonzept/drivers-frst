@@ -27,6 +27,12 @@ public:
   explicit Uart_bcm2835(unsigned long base_rate)
   : Uart_16550(base_rate, 0, 8)
   {}
+
+  bool reg_shift(l4_uint8_t *shift) const override
+  {
+    *shift = 2;
+    return true;
+  }
 };
 
 } // namespace L4

@@ -9,6 +9,7 @@
 
 #include <stddef.h>
 #include <l4/drivers/io_regblock.h>
+#include <l4/sys/types.h>
 
 #include <l4/drivers/device.h>
 #include "poll_timeout_counter.h"
@@ -35,6 +36,16 @@ public:
   Uart()
   : _mode(~0U), _rate(~0U)
   {}
+
+  /**
+   * Provide the reg_shift value for the UART's registers.
+   *
+   * \param[out] shift  Register shift to be used for the UART's registers.
+   * \retval false      The output argument is not valid.
+   * \retval true       The output argument is valid.
+   */
+  virtual bool reg_shift(l4_uint8_t *shift __attribute__((unused))) const
+  { return false; }
 
   /**
    * Start the UART driver.
