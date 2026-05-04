@@ -28,7 +28,7 @@ public:
   : Uart_16550(base_rate, 0, 8)
   {}
 
-  bool reg_shift(l4_uint8_t *shift) const override
+  bool reg_shift(unsigned char *shift) const override
   {
     *shift = 2;
     return true;

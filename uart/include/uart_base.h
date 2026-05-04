@@ -44,7 +44,7 @@ public:
    * \retval false      The output argument is not valid.
    * \retval true       The output argument is valid.
    */
-  virtual bool reg_shift(l4_uint8_t *shift __attribute__((unused))) const
+  virtual bool reg_shift(unsigned char *shift __attribute__((unused))) const
   { return false; }
 
   /**
