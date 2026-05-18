@@ -23,6 +23,7 @@ SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_ABP)       += uart_apb.cc
 SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_TEGRA_TCU) += uart_tegra-tcu.cc
 SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_SBI)       += uart_sbi.cc
 SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_SIFIVE)    += uart_sifive.cc
+SRC_CC-$(CONFIG_DRIVERS_FRST_UART_DRV_STM32)     += uart_stm32.cc
 SYSTEMS         = $(SYSTEMS_PLAIN)
 TARGET          = libdrivers_uart.a libdrivers_uart.p.a
 PC_LIBS_WHOLELIB = y

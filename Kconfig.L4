@@ -81,6 +81,10 @@ config DRIVERS_FRST_UART_DRV_SIFIVE
         bool "sifive" if !DRIVERS_FRST_UART_ALL_DRIVERS
         default y if DRIVERS_FRST_UART_ALL_DRIVERS
 
+config DRIVERS_FRST_UART_DRV_STM32
+        bool "stm32" if !DRIVERS_FRST_UART_ALL_DRIVERS
+        default y if DRIVERS_FRST_UART_ALL_DRIVERS
+
 config DRIVERS_FRST_UART_DRV_TEGRA_TCU
         bool "tegra-tcu" if !DRIVERS_FRST_UART_ALL_DRIVERS
         default y if DRIVERS_FRST_UART_ALL_DRIVERS
