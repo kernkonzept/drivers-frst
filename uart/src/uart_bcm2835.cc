@@ -11,7 +11,7 @@
  */
 #include "uart_bcm2835.h"
 
-static l4re_device_spec_dt_ids dt_ids[] = {
+static const l4re_device_spec_dt_ids dt_ids[] = {
   { .compatible = "brcm,bcm2835-aux-uart" },
   {},
 };
